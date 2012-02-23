@@ -35,6 +35,22 @@ function civicrmogp_civicrm_pageRun(&$page) {
       );
       drupal_add_html_head($element, 'ogp_description');
 
+      // Add the default site logo, as an alternative choice
+      // Oddly, needs to be before the real PCP image, otherwise it shows before
+/* removing for now, since not really needed (in my use case)
+      if ($image = theme_get_setting('logo')) {
+         // adds: <meta property="og:image" content="http://[...]" />
+         $element = array(
+           '#tag' => 'meta',
+           '#attributes' => array(
+             'property' => 'og:image',
+             'content' => $image,
+           ),
+         );
+         drupal_add_html_head($element, 'ogp_image_default');
+      }
+*/
+
       // Add the image
       if ($file_id = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_EntityFile', $id , 'file_id', 'entity_id') ) {
         $image = CRM_Utils_System::url('civicrm/file', "reset=1&id=$file_id&eid={$id}", TRUE);
@@ -49,6 +65,7 @@ function civicrmogp_civicrm_pageRun(&$page) {
         );
         drupal_add_html_head($element, 'ogp_image');
       }
+
     }
   }
 }
