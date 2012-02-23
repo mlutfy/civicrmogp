@@ -23,8 +23,8 @@ function civicrmogp_civicrm_pageRun(&$page) {
           'content' => $dao->title,
         ),
       );
-
       drupal_add_html_head($element, 'ogp_title');
+
       // adds: <meta property="og:description" content="[...]" />
       $element = array(
         '#tag' => 'meta',
