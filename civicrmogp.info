@@ -1,0 +1,4 @@
+; $Id$
+name = CiviCRM OGP support
+description = "Adds Open Graph support to CiviCRM"
+core = "7.x"

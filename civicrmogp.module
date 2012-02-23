@@ -1,0 +1,56 @@
+<?php
+
+function civicrmogp_civicrm_buildForm($formName, &$form) {
+    // dsm($form);
+  if ($formName == 'CRM_Contribute_Form_Contribution_Main') {
+
+  }
+}
+
+function civicrmogp_civicrm_pageRun(&$page) {
+  if (get_class($page) == 'CRM_Contribute_Page_PCPInfo') {
+    $id = $page->get('id');
+
+    $dao = new CRM_Contribute_DAO_PCP();
+    $dao->id = $id;
+
+    if ($dao->find(true)) {
+      // adds: <meta property="og:title" content="[...]" />
+      $element = array(
+        '#tag' => 'meta',
+        '#attributes' => array(
+          'property' => 'og:title',
+          'content' => $dao->title,
+        ),
+      );
+
+      drupal_add_html_head($element, 'ogp_title');
+      // adds: <meta property="og:description" content="[...]" />
+      $element = array(
+        '#tag' => 'meta',
+        '#attributes' => array(
+          'property' => 'og:description',
+          'content' => $dao->intro_text,
+        ),
+      );
+      drupal_add_html_head($element, 'ogp_description');
+
+      // Add the image
+      if ($file_id = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_EntityFile', $id , 'file_id', 'entity_id') ) {
+        $image = CRM_Utils_System::url('civicrm/file', "reset=1&id=$file_id&eid={$id}", TRUE);
+
+        // adds: <meta property="og:image" content="http://[...]" />
+        $element = array(
+          '#tag' => 'meta',
+          '#attributes' => array(
+            'property' => 'og:image',
+            'content' => $image,
+          ),
+        );
+        drupal_add_html_head($element, 'ogp_image');
+      }
+    }
+  }
+}
+
+
