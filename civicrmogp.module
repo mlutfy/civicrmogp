@@ -52,8 +52,11 @@ function civicrmogp_civicrm_pageRun(&$page) {
 */
 
       // Add the image
+/* DOES NOT WORK: url encodes the file parameters, and facebook does not parse them correctly */
+/*
       if ($file_id = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_EntityFile', $id , 'file_id', 'entity_id') ) {
-        $image = CRM_Utils_System::url('civicrm/file', "reset=1&id=$file_id&eid={$id}", TRUE);
+        // Using UF function adds language prefix and htmlencodes parameters.. breaks Facebook
+        $image = CRM_Utils_System::url('civicrm/file', "reset=1&id=$file_id&eid={$id}", TRUE, NULL, FALSE);
 
         // adds: <meta property="og:image" content="http://[...]" />
         $element = array(
@@ -65,6 +68,7 @@ function civicrmogp_civicrm_pageRun(&$page) {
         );
         drupal_add_html_head($element, 'ogp_image');
       }
+*/
 
     }
   }
