@@ -1,9 +1,26 @@
 <?php
 
 function civicrmogp_civicrm_buildForm($formName, &$form) {
-    // dsm($form);
   if ($formName == 'CRM_Contribute_Form_Contribution_Main') {
+    // adds: <meta property="og:title" content="[...]" />
+    $element = array(
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'property' => 'og:title',
+        'content' => $form->_values['title'],
+      ),
+    );
+    drupal_add_html_head($element, 'ogp_title');
 
+    // adds: <meta property="og:description" content="[...]" />
+    $element = array(
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'property' => 'og:description',
+        'content' => $form->_values['intro_text'],
+      ),
+    );
+    drupal_add_html_head($element, 'ogp_description');
   }
 }
 
