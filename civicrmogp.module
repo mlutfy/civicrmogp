@@ -10,17 +10,17 @@ function civicrmogp_civicrm_buildForm($formName, &$form) {
         'content' => $form->_values['title'],
       ),
     );
-    drupal_add_html_head(strip_tags($element), 'ogp_title');
+    drupal_add_html_head($element, 'ogp_title');
 
     // adds: <meta property="og:description" content="[...]" />
     $element = array(
       '#tag' => 'meta',
       '#attributes' => array(
         'property' => 'og:description',
-        'content' => $form->_values['intro_text'],
+        'content' => strip_tags($form->_values['intro_text']),
       ),
     );
-    drupal_add_html_head(strip_tags($element), 'ogp_description');
+    drupal_add_html_head($element, 'ogp_description');
   }
 }
 
